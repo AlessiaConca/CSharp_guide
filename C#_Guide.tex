@@ -1,0 +1,432 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\title{C\# Developer for Game Programming}
+\author{Alessia C.R.}
+\date{\today}
+
+% Custom settings for C# language highlighting
+\lstdefinelanguage{CSharp}{
+	morekeywords={abstract, as, base, bool, break, byte, case, catch, char, checked, class, const, continue, decimal, default, delegate, do, double, else, enum, event, explicit, extern, false, finally, fixed, float, for, foreach, goto, if, implicit, in, int, interface, internal, is, lock, long, namespace, new, null, object, operator, out, override, params, private, protected, public, readonly, ref, return, sbyte, sealed, short, sizeof, stackalloc, static, string, struct, switch, this, throw, true, try, typeof, uint, ulong, unchecked, unsafe, ushort, using, virtual, void, volatile, while},
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+}
+
+\lstset{
+	language=CSharp,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\bfseries\color{blue},
+	commentstyle=\itshape\color{gray},
+	stringstyle=\color{red},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	numbersep=10pt,
+	backgroundcolor=\color{white},
+	tabsize=4,
+	showspaces=false,
+	showstringspaces=false,
+	breaklines=true
+}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	
+	\chapter{Introduction to C\# for Game Development}
+	\section{What is C\#?}
+	C\# is a modern, object-oriented programming language developed by Microsoft. It is designed to be a simple, general-purpose, object-oriented language that enables developers to build a wide range of applications, including games. C\# is commonly used in game development for its powerful features, performance optimizations, and its close integration with game development environments like Unity and MonoGame.
+	
+	\section{Why Use C\# for Game Development?}
+	\subsection{Strong Ecosystem and Unity Integration}
+	One of the main reasons C\# is popular for game development is its seamless integration with Unity, one of the most widely used game engines in the industry. Unity is free to use, cross-platform, and supports both 2D and 3D game development, making it an attractive option for developers. MonoGame, another framework, is also commonly used for building 2D and 3D games in C\#.
+	
+	\subsection{Ease of Learning and Rich Documentation}
+	C\# is an easy language to learn, especially for those with experience in other object-oriented languages like Java or C++. The language comes with robust documentation, tutorials, and community support, which helps beginners get started with building games quickly.
+	
+	\section{Setting Up Your Development Environment}
+	\subsection{Installing Visual Studio}
+	Visual Studio is the recommended integrated development environment (IDE) for C\# development. Visual Studio comes with built-in tools for writing, testing, and debugging C\# code. You can download the free Community edition from the official Visual Studio website.
+	
+	\subsection{Installing Unity and MonoGame}
+	\textbf{Unity}: Unity is a powerful, cross-platform game engine that supports both 2D and 3D development. It is the most popular game development platform for C\# developers. Unity provides an editor for managing assets, game objects, and scripts.
+	
+	\textbf{MonoGame}: MonoGame is an open-source game development framework that allows developers to build cross-platform games using C\#. It is suitable for both 2D and 3D games and is a great alternative for those not using Unity.
+	
+	\section{First Steps in Unity}
+	Once Unity is installed, open it and create a new project. The Unity Editor is where you'll design game levels, control object interactions, and write C\# scripts. In Unity, everything is built around GameObjects and Components, which are controlled via scripts.
+	
+	\begin{lstlisting}
+		// A simple script to move a player in Unity
+		using UnityEngine;
+		
+		public class PlayerController : MonoBehaviour
+		{
+			public float speed = 5f;
+			
+			void Update()
+			{
+				float moveHorizontal = Input.GetAxis("Horizontal");
+				float moveVertical = Input.GetAxis("Vertical");
+				
+				Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+				transform.Translate(movement * speed * Time.deltaTime);
+			}
+		}
+	\end{lstlisting}
+	
+	\chapter{C\# Basics for Game Development}
+	\section{C\# Syntax Overview}
+	\subsection{Variables and Data Types}
+	C\# supports various data types such as integers, floats, booleans, and strings. These are used to store game states such as health, position, and player actions.
+	
+	\textbf{Example:}
+	\begin{lstlisting}
+		int health = 100;
+		float speed = 10.5f;
+		bool isJumping = false;
+		string playerName = "Hero";
+	\end{lstlisting}
+	
+	\subsection{Operators and Control Flow}
+	Control the flow of your game using operators, if-else conditions, and loops.
+	
+	\begin{lstlisting}
+		// If-else for game logic
+		if (health <= 0)
+		{
+			GameOver();
+		}
+		else
+		{
+			ContinuePlaying();
+		}
+	\end{lstlisting}
+	
+	\subsection{Loops (For, While, Do-While)}
+	\begin{lstlisting}
+		// Using a loop to spawn enemies
+		for (int i = 0; i < 5; i++)
+		{
+			SpawnEnemy();
+		}
+	\end{lstlisting}
+	
+	\section{Collections and Data Structures}
+	C\# provides several built-in data structures such as arrays, lists, and dictionaries to manage game elements such as players, enemies, and items.
+	\subsection{Arrays and Lists}
+	Arrays and lists are useful for storing multiple items of the same type.
+	
+	\begin{lstlisting}
+		// Arrays to store multiple player scores
+		int[] playerScores = new int[10];
+		
+		// List to store enemies in the game
+		List<Enemy> enemies = new List<Enemy>();
+	\end{lstlisting}
+	
+	\subsection{Dictionaries}
+	Dictionaries allow you to store key-value pairs, which can be useful for mapping items or players to certain properties.
+	
+	\begin{lstlisting}
+		// Dictionary mapping player names to their score
+		Dictionary<string, int> playerScores = new Dictionary<string, int>();
+		playerScores.Add("Player1", 100);
+	\end{lstlisting}
+	
+	\chapter{Object-Oriented Programming in C\#}
+	\section{Classes and Objects in Game Development}
+	In game development, classes are used to represent game entities such as players, enemies, and weapons. Objects are instances of these classes.
+	
+	\begin{lstlisting}
+		public class Player
+		{
+			public string Name { get; set; }
+			public int Health { get; set; }
+			public float Speed { get; set; }
+			
+			public Player(string name, int health, float speed)
+			{
+				Name = name;
+				Health = health;
+				Speed = speed;
+			}
+			
+			public void Move()
+			{
+				Console.WriteLine($"{Name} is moving at speed {Speed}");
+			}
+		}
+	\end{lstlisting}
+	
+	\section{Inheritance and Polymorphism in Games}
+	Inheritance allows you to create a class hierarchy, where more specialized classes (like Enemy or Boss) inherit properties and methods from a base class (like Character).
+	
+	\begin{lstlisting}
+		public class Enemy : Player
+		{
+			public int Damage { get; set; }
+			
+			public Enemy(string name, int health, float speed, int damage)
+			: base(name, health, speed)
+			{
+				Damage = damage;
+			}
+			
+			public void Attack()
+			{
+				Console.WriteLine($"{Name} attacks and deals {Damage} damage.");
+			}
+		}
+	\end{lstlisting}
+	
+	\chapter{Advanced C\# Concepts for Game Development}
+	\section{Delegates and Events}
+	Delegates and events are powerful features in C\# for managing interactions in game components. Events are used for communication between objects, such as triggering actions when a player completes a level or when health reaches zero.
+	
+	\begin{lstlisting}
+		// Declare a delegate for handling game events
+		public delegate void GameEvent();
+		
+		public class GameManager
+		{
+			public static event GameEvent OnGameOver;
+			
+			public void GameOver()
+			{
+				if (OnGameOver != null)
+				{
+					OnGameOver();
+				}
+			}
+		}
+		
+		// Subscribe to the event
+		public class Player
+		{
+			public Player()
+			{
+				GameManager.OnGameOver += EndGame;
+			}
+			
+			void EndGame()
+			{
+				Console.WriteLine("Game Over!");
+			}
+		}
+	\end{lstlisting}
+	
+	\chapter{Working with Unity}
+	\section{GameObject and Components}
+	GameObjects are the most important building blocks in Unity. They represent all objects in your scene, including characters, items, and scenery.
+	
+	\begin{lstlisting}
+		public class Rotator : MonoBehaviour
+		{
+			void Update()
+			{
+				transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
+			}
+		}
+	\end{lstlisting}
+	
+	\section{Physics and Collisions}
+	Unity's physics engine allows you to create realistic movements and interactions between game objects. To utilize physics, you need to understand Rigidbody and Collider components.
+	
+	\subsection{Rigidbody Component}
+	The Rigidbody component adds physical properties to a GameObject, enabling it to be affected by forces, gravity, and collisions.
+	
+	\begin{lstlisting}
+		// Adding Rigidbody to a GameObject
+		void Start()
+		{
+			Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+			rb.mass = 5.0f;
+		}
+	\end{lstlisting}
+	
+	\subsection{Collider Component}
+	Colliders define the shape of a GameObject for physical collisions. Different types of colliders (Box, Sphere, Capsule) can be used based on your requirements.
+	
+	\begin{lstlisting}
+		// Using BoxCollider for a cube GameObject
+		void Start()
+		{
+			BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+			boxCollider.size = new Vector3(1, 1, 1);
+		}
+	\end{lstlisting}
+	
+	\subsection{Collision Detection}
+	Unity allows you to detect collisions using methods like `OnCollisionEnter`, `OnCollisionStay`, and `OnCollisionExit`.
+	
+	\begin{lstlisting}
+		void OnCollisionEnter(Collision collision)
+		{
+			if (collision.gameObject.CompareTag("Player"))
+			{
+				Debug.Log("Collision with Player detected!");
+			}
+		}
+	\end{lstlisting}
+	
+	\chapter{User Input in Games}
+	User input is essential for making games interactive. In Unity, you can capture user input from keyboards, mice, and controllers.
+	
+	\section{Capturing Keyboard Input}
+	Unity provides easy access to keyboard input through the `Input` class. You can check for specific keys or axes.
+	
+	\begin{lstlisting}
+		// Checking for keyboard input in Update
+		void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				Jump();
+			}
+		}
+	\end{lstlisting}
+	
+	\section{Mouse Input}
+	You can also capture mouse clicks and movements in Unity.
+	
+	\begin{lstlisting}
+		// Detecting mouse button click
+		void Update()
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				Debug.Log("Left mouse button clicked!");
+			}
+		}
+	\end{lstlisting}
+	
+	\section{Controller Input}
+	To handle controller input, you can use the `Input` class with defined axes.
+	
+	\begin{lstlisting}
+		// Getting controller input
+		float horizontal = Input.GetAxis("Horizontal");
+		float vertical = Input.GetAxis("Vertical");
+		Vector3 movement = new Vector3(horizontal, 0, vertical);
+		transform.Translate(movement * speed * Time.deltaTime);
+	\end{lstlisting}
+	
+	\chapter{Game Design Principles}
+	Understanding game design principles is crucial for developing engaging and fun games.
+	
+	\section{Game Mechanics}
+	Game mechanics refer to the rules and systems that govern gameplay. This includes how players interact with the game and the objectives they must achieve.
+	
+	\subsection{Core Gameplay Loop}
+	The core gameplay loop is a sequence of actions that players perform repetitively. It often consists of actions such as exploring, collecting resources, and battling enemies.
+	
+	\section{Level Design}
+	Level design involves creating the environments where players interact. A well-designed level provides challenges and opportunities for players to engage with game mechanics.
+	
+	\section{User Interface (UI) Design}
+	A good UI enhances player experience by providing clear feedback and options. Unity provides tools for designing UI elements.
+	
+	\begin{lstlisting}
+		// Example of creating a simple UI button in Unity
+		public Button myButton;
+		
+		void Start()
+		{
+			myButton.onClick.AddListener(OnButtonClick);
+		}
+		
+		void OnButtonClick()
+		{
+			Debug.Log("Button clicked!");
+		}
+	\end{lstlisting}
+	
+	\chapter{Debugging and Testing}
+	Debugging is an essential skill for game developers. Unity provides several tools to help you find and fix issues in your game.
+	
+	\section{Using Debug.Log}
+	Use `Debug.Log` to print messages to the console, which can help track down issues.
+	
+	\begin{lstlisting}
+		void Update()
+		{
+			Debug.Log("Current health: " + health);
+		}
+	\end{lstlisting}
+	
+	\section{Unit Testing in C\#}
+	Unit testing allows you to test individual components of your game to ensure they work as expected. Use a framework like NUnit for writing tests.
+	
+	\begin{lstlisting}
+		// Example of a simple unit test
+		[Test]
+		public void TestPlayerHealth()
+		{
+			Player player = new Player("Hero", 100, 5);
+			Assert.AreEqual(100, player.Health);
+		}
+	\end{lstlisting}
+	
+	\chapter{Optimizing Game Performance}
+	Performance optimization is crucial in game development to ensure a smooth experience for players. 
+	
+	\section{Understanding Performance Bottlenecks}
+	Analyze your game's performance using Unity's Profiler to identify bottlenecks in rendering, memory usage, and CPU/GPU usage.
+	
+	\section{Memory Management}
+	Manage memory efficiently by avoiding excessive object creation during runtime. Use object pooling to recycle objects instead of creating new instances.
+	
+	\begin{lstlisting}
+		// Simple object pooling implementation
+		public class ObjectPool
+		{
+			private List<GameObject> pool;
+			
+			public ObjectPool(GameObject prefab, int size)
+			{
+				pool = new List<GameObject>();
+				for (int i = 0; i < size; i++)
+				{
+					GameObject obj = GameObject.Instantiate(prefab);
+					obj.SetActive(false);
+					pool.Add(obj);
+				}
+			}
+			
+			public GameObject GetObject()
+			{
+				foreach (var obj in pool)
+				{
+					if (!obj.activeInHierarchy)
+					{
+						obj.SetActive(true);
+						return obj;
+					}
+				}
+				return null; // Or expand pool
+			}
+		}
+	\end{lstlisting}
+	
+	\chapter{Conclusion}
+	C\# is a powerful language for game development, especially when paired with Unity. This guide has introduced you to the fundamentals of C\# programming, game design principles, user input handling, debugging techniques, and optimization strategies. 
+	
+	\section{Next Steps}
+	To further enhance your skills, consider:
+	\begin{itemize}
+		\item Creating small projects to apply what you've learned.
+		\item Participating in game jams to practice rapid development.
+		\item Exploring advanced topics such as AI programming and shader development.
+	\end{itemize}
+	
+\end{document}
+	
+
